@@ -21,6 +21,7 @@ public class InputManager : MonoBehaviour
 		foreach (QueuedClip qc in instrument1ClipsAndKeys) {
 			qc.clip.loop = true;
 			qc.clip.Play();
+			audio.clip = qc.clip.audioClip;
 			audio.Play();
 		}
 	}
