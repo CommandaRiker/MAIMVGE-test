@@ -1,21 +1,18 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
 	public static InputManager Instance { get; private set; }
 
-	public Queue<KeyCode> instrument1InputQueue = new Queue<KeyCode>();
-	public Queue<KeyCode> instrument2InputQueue = new Queue<KeyCode>();
+	public List<QueuedClip> instrument1ClipsAndKeys = new List<QueuedClip>();
+	public List<QueuedClip> instrument2ClipsAndKeys = new List<QueuedClip>();
+	public List<QueuedClip> instrument3ClipsAndKeys = new List<QueuedClip>();
 
-	public KeyCode instrument1Loop1Key = KeyCode.Q;
-	public KeyCode instrument1Loop2Key = KeyCode.W;
-	public KeyCode instrument1Loop3Key = KeyCode.E;
-
-	public KeyCode instrument2Loop1Key = KeyCode.A;
-	public KeyCode instrument2Loop2Key = KeyCode.S;
-	public KeyCode instrument2Loop3Key = KeyCode.D;
+	public Queue<MovieTexture> instrument1ClipQueue = new Queue<MovieTexture>();
+	public Queue<MovieTexture> instrument2ClipQueue = new Queue<MovieTexture>();
+	public Queue<MovieTexture> instrument3ClipQueue = new Queue<MovieTexture>();
 	
 	void Awake()
 	{
@@ -28,23 +25,24 @@ public class InputManager : MonoBehaviour
 	public void HandleInput()
 	{
 		// Instrument 1
-		if (Input.GetKeyDown(instrument1Loop1Key))
-			instrument1InputQueue.Enqueue(instrument1Loop1Key);
-
-		if (Input.GetKeyDown(instrument1Loop2Key))
-			instrument1InputQueue.Enqueue(instrument1Loop2Key);
-
-		if (Input.GetKeyDown(instrument1Loop3Key))
-			instrument1InputQueue.Enqueue(instrument1Loop3Key);
+		foreach (QueuedClip qc1 in instrument1ClipsAndKeys)
+			if (Input.GetKeyDown(qc1.key))
+				instrument1ClipQueue.Enqueue(qc1.clip);
+		
+		// Instrument 2
+		foreach (QueuedClip qc2 in instrument2ClipsAndKeys)
+			if (Input.GetKeyDown(qc2.key))
+				instrument2ClipQueue.Enqueue(qc2.clip);
 
 		// Instrument 2
-		if (Input.GetKeyDown(instrument2Loop1Key))
-			instrument2InputQueue.Enqueue(instrument2Loop1Key);
-
-		if (Input.GetKeyDown(instrument2Loop2Key))
-			instrument2InputQueue.Enqueue(instrument2Loop2Key);
-
-		if (Input.GetKeyDown(instrument2Loop3Key))
-			instrument2InputQueue.Enqueue(instrument2Loop3Key);
+		foreach (QueuedClip qc3 in instrument3ClipsAndKeys)
+			if (Input.GetKeyDown(qc3.key))
+				instrument3ClipQueue.Enqueue(qc3.clip);
 	}
+}
+[Serializable]
+public class QueuedClip
+{
+	public MovieTexture clip;
+	public KeyCode key;
 }
