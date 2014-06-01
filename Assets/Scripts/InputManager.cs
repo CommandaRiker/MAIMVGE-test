@@ -17,6 +17,12 @@ public class InputManager : MonoBehaviour
 	void Awake()
 	{
 		Instance = this;
+
+		foreach (QueuedClip qc in instrument1ClipsAndKeys) {
+			qc.clip.loop = true;
+			qc.clip.Play();
+			audio.Play();
+		}
 	}
 	void Update()
 	{
