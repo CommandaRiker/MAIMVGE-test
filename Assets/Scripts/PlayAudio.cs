@@ -11,7 +11,9 @@ public class PlayAudio : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		MovieTexture clip1 = (MovieTexture)renderer.material.mainTexture;
-		if (Input.GetButtonDown ("Jump")) {
+		clip1.Play();
+		clip1.loop = true;
+		/*if (Input.GetButtonDown ("Jump")) {
 
 		
 			if (clip1.isPlaying) {
@@ -21,6 +23,7 @@ public class PlayAudio : MonoBehaviour {
 				clip1.Play();
 			}
 		}
+		*/
 
 		//renderer.material.mainTexture.Play();
 
